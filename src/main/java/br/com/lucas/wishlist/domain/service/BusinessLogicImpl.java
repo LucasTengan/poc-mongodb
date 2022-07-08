@@ -3,15 +3,15 @@ package br.com.lucas.wishlist.domain.service;
 import br.com.lucas.wishlist.domain.model.Produto;
 import br.com.lucas.wishlist.domain.ports.BusinessLogic;
 import br.com.lucas.wishlist.domain.ports.ProdutoRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class BusinessLogicImpl implements BusinessLogic {
 
+    @Autowired
     private ProdutoRepository produtoRepository;
 
     @Override

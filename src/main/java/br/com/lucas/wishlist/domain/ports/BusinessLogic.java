@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BusinessLogic {
 
-    Produto adicionaProdutoNaWishList(Produto produto);
+    Produto adicionaProdutoNaWishlist(Produto produto);
     void deletaProdutoDaWishList(String id);
     List<Produto> consultaProdutosDaWishlist();
     Produto consultaSeDeterminadoProdutoEstaNaWishlist(String id);

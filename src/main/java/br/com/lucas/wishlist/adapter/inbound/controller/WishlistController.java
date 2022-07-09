@@ -30,7 +30,9 @@ public class WishlistController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Produto>> listAllProdutosNaWishlist() {
-        return new ResponseEntity<>(businessLogic.consultaProdutosDaWishlist(), HttpStatus.OK);
+    public ResponseEntity<List<ProdutoResponse>> listAllProdutosNaWishlist() {
+        List<Produto> produtos = businessLogic.consultaProdutosDaWishlist();
+        List<ProdutoResponse> produtosNaWishlistASeremRetornados = produtoMapper.entitiesToResponse(produtos);
+        return new ResponseEntity<>(produtosNaWishlistASeremRetornados, HttpStatus.OK);
     }
 }

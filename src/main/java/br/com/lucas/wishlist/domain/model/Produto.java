@@ -13,7 +13,6 @@ public class Produto {
     private String id;
     private String nome;
     private String marca;
-    private String cor;
     private String categoria;
     private String vendidoPor;
     private String detalhes;
@@ -42,14 +41,6 @@ public class Produto {
 
     public void setMarca(String marca) {
         this.marca = marca;
-    }
-
-    public String getCor() {
-        return cor;
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
     }
 
     public String getCategoria() {

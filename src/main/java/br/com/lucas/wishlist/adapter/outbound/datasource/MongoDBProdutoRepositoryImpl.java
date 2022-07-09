@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Primary
@@ -22,8 +23,8 @@ public class MongoDBProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public void deletaProdutoPorId(String id) {
-        /* TODO */
+    public void deletaProduto(Produto produto) {
+        mongoDBProdutoRepository.delete(produto);
     }
 
     @Override
@@ -32,8 +33,7 @@ public class MongoDBProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public Produto verificaSeExisteProdutoPorId(String id) {
-        /* TODO */
-        return null;
+    public Optional<Produto> buscaProdutoPorNomeMarcaDetalhes(String nome, String marca, String detalhes) {
+        return mongoDBProdutoRepository.findByNomeAndMarcaAndDetalhes(nome, marca, detalhes);
     }
 }

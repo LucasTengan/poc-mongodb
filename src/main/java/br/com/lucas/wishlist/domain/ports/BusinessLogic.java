@@ -10,5 +10,5 @@ public interface BusinessLogic {
     Produto adicionaProdutoNaWishlist(Produto produto);
     void deletaProdutoDaWishList(String nome, String marca, String detalhes);
     List<Produto> consultaProdutosDaWishlist();
-    Optional<Produto> verificaSeProdutoEstaNaWishlist(String nome, String marca, String detalhes);
+    Produto verificaSeProdutoEstaNaWishlist(String nome, String marca, String detalhes);
 }

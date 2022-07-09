@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Document
@@ -11,6 +12,7 @@ public class Produto {
 
     @Id
     private String id;
+    @NotNull
     private String nome;
     private String marca;
     private String categoria;

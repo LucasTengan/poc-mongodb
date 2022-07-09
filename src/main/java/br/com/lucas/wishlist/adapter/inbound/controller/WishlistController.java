@@ -29,10 +29,25 @@ public class WishlistController {
         return new ResponseEntity<>(produtoAdicionadoASerRetornado, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteProdutoDaWishlist(@RequestParam(required = true) String nome, @RequestParam(required = true) String marca, @RequestParam(required = true) String detalhes) {
+        businessLogic.deletaProdutoDaWishList(nome, marca, detalhes);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<ProdutoResponse>> listAllProdutosNaWishlist() {
         List<Produto> produtos = businessLogic.consultaProdutosDaWishlist();
         List<ProdutoResponse> produtosNaWishlistASeremRetornados = produtoMapper.entitiesToResponse(produtos);
         return new ResponseEntity<>(produtosNaWishlistASeremRetornados, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", params = "nome")
+    public ResponseEntity<ProdutoResponse> listUmDeterminadoProdutoDaWishlist(@RequestParam(required = true) String nome, @RequestParam(required = true) String marca, @RequestParam(required = true) String detalhes) {
+        Produto produtoProcurado = businessLogic.verificaSeProdutoEstaNaWishlist(nome, marca, detalhes);
+        ProdutoResponse produtoEncontradoASerRetornado = produtoMapper.entityToResponse(produtoProcurado);
+
+        return new ResponseEntity<>(produtoEncontradoASerRetornado, HttpStatus.OK);
     }
 }

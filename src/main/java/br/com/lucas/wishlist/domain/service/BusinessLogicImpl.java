@@ -17,7 +17,7 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Produto adicionaProdutoNaWishlist(Produto produto) {
-        Optional<Produto> produtoProcurado = verificaSeProdutoEstaNaWishlist(produto.getNome(), produto.getMarca(), produto.getDetalhes());
+        Optional<Produto> produtoProcurado = produtoRepository.buscaProdutoPorNomeMarcaDetalhes(produto.getNome(), produto.getMarca(), produto.getDetalhes());
         produto.setQtd(1);
         if (produtoProcurado.isPresent()) {
             produto = produtoProcurado.get();
@@ -31,11 +31,13 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public void deletaProdutoDaWishList(String nome, String marca, String detalhes) {
-        Optional<Produto> produtoProcurado = verificaSeProdutoEstaNaWishlist(nome, marca, detalhes);
-        if (produtoProcurado.isEmpty()) {
-            throw new RuntimeException();
+        Produto produtoProcurado = verificaSeProdutoEstaNaWishlist(nome, marca, detalhes);
+        if (produtoProcurado.getQtd() >= 2) {
+            produtoProcurado.setQtd(produtoProcurado.getQtd() - 1);
+            produtoRepository.criaProduto(produtoProcurado);
+            return;
         }
-        produtoRepository.deletaProduto(produtoProcurado.get());
+        produtoRepository.deletaProduto(produtoProcurado);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public Optional<Produto> verificaSeProdutoEstaNaWishlist(String nome, String marca, String detalhes) {
-        return produtoRepository.buscaProdutoPorNomeMarcaDetalhes(nome, marca, detalhes);
+    public Produto verificaSeProdutoEstaNaWishlist(String nome, String marca, String detalhes) {
+        return produtoRepository.buscaProdutoPorNomeMarcaDetalhes(nome, marca, detalhes).orElseThrow(() -> new RuntimeException());
     }
 }

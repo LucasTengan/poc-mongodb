@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ProdutoRepository {
 
     Produto criaProduto(Produto produto);
+    Produto atualizaProduto(Produto produto);
     void deletaProduto(Produto produto);
     List<Produto> listaProdutos();
     Optional<Produto> buscaProdutoPorNomeMarcaDetalhes(String nome, String marca, String detalhes);

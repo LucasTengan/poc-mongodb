@@ -43,7 +43,7 @@ public class WishlistController {
         return new ResponseEntity<>(produtosNaWishlistASeremRetornados, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", params = "nome")
+    @GetMapping(value = "/produto")
     public ResponseEntity<ProdutoResponse> listUmDeterminadoProdutoDaWishlist(@RequestParam(required = true) String nome, @RequestParam(required = true) String marca, @RequestParam(required = true) String detalhes) {
         Produto produtoProcurado = businessLogic.verificaSeProdutoEstaNaWishlist(nome, marca, detalhes);
         ProdutoResponse produtoEncontradoASerRetornado = produtoMapper.entityToResponse(produtoProcurado);

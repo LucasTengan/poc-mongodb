@@ -34,7 +34,7 @@ public class BusinessLogicImpl implements BusinessLogic {
         Produto produtoProcurado = verificaSeProdutoEstaNaWishlist(nome, marca, detalhes);
         if (produtoProcurado.getQtd() >= 2) {
             produtoProcurado.setQtd(produtoProcurado.getQtd() - 1);
-            produtoRepository.criaProduto(produtoProcurado);
+            produtoRepository.atualizaProduto(produtoProcurado);
             return;
         }
         produtoRepository.deletaProduto(produtoProcurado);

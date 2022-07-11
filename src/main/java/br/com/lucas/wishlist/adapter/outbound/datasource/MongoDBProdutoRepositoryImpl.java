@@ -23,6 +23,11 @@ public class MongoDBProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
+    public Produto atualizaProduto(Produto produto) {
+        return mongoDBProdutoRepository.save(produto);
+    }
+
+    @Override
     public void deletaProduto(Produto produto) {
         mongoDBProdutoRepository.delete(produto);
     }

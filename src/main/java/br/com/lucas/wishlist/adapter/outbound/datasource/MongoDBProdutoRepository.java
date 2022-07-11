@@ -1,6 +1,6 @@
 package br.com.lucas.wishlist.adapter.outbound.datasource;
 
-import br.com.lucas.wishlist.domain.model.Produto;
+import br.com.lucas.wishlist.domain.model.entity.Produto;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

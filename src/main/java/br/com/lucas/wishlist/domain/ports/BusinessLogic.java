@@ -1,9 +1,8 @@
 package br.com.lucas.wishlist.domain.ports;
 
-import br.com.lucas.wishlist.domain.model.Produto;
+import br.com.lucas.wishlist.domain.model.entity.Produto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BusinessLogic {
 

@@ -1,6 +1,7 @@
 package br.com.lucas.wishlist.domain.service;
 
-import br.com.lucas.wishlist.domain.model.Produto;
+import br.com.lucas.wishlist.domain.model.entity.Produto;
+import br.com.lucas.wishlist.domain.model.exception.ProdutoNaoEncontradoNaWishlistException;
 import br.com.lucas.wishlist.domain.ports.BusinessLogic;
 import br.com.lucas.wishlist.domain.ports.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,6 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Produto verificaSeProdutoEstaNaWishlist(String nome, String marca, String detalhes) {
-        return produtoRepository.buscaProdutoPorNomeMarcaDetalhes(nome, marca, detalhes).orElseThrow(() -> new RuntimeException());
+        return produtoRepository.buscaProdutoPorNomeMarcaDetalhes(nome, marca, detalhes).orElseThrow(ProdutoNaoEncontradoNaWishlistException::new);
     }
 }

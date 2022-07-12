@@ -24,8 +24,6 @@ public class BusinessLogicImpl implements BusinessLogic {
             produto = produtoProcurado.get();
             produto.setQtd(produto.getQtd() + 1);
         }
-//        produto.setQtd(verificaSeProdutoJaEstaNaWishlist(produto.getNome(), produto.getMarca(), produto.getDetalhes()) ? produto.getQtd()+1 : 1);
-        // Atualizar na base de dados
 
         return produtoRepository.criaProduto(produto);
     }

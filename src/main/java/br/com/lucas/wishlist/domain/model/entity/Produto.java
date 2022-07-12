@@ -14,11 +14,14 @@ public class Produto {
     private String id;
     @NotNull
     private String nome;
+    @NotNull
     private String marca;
+    @NotNull
+    private String detalhes;
+    @NotNull
+    private BigDecimal preco;
     private String categoria;
     private String vendidoPor;
-    private String detalhes;
-    private BigDecimal preco;
     private Integer qtd;
 
     public String getId() {

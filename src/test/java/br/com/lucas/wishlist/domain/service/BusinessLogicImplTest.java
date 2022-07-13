@@ -1,6 +1,7 @@
 package br.com.lucas.wishlist.domain.service;
 
 import br.com.lucas.wishlist.domain.model.entity.Produto;
+import br.com.lucas.wishlist.domain.model.exception.ProdutoNaoEncontradoNaWishlistException;
 import br.com.lucas.wishlist.domain.ports.ProdutoRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +60,15 @@ class BusinessLogicImplTest {
     }
 
     @Test
+    void deveIncrementarQtdDoProdutoQuandoJaPersistido() {
+        when(produtoRepository.buscaProdutoPorNomeMarcaDetalhes(anyString(), anyString(), anyString())).thenReturn(Optional.ofNullable(produtoTeste));
+        when(produtoRepository.criaProduto(any())).thenReturn(produtoTeste);
+        Produto produtoIncrementadoNaWishlist = businessLogic.adicionaProdutoNaWishlist(produtoTeste);
+
+        Assertions.assertThat(produtoIncrementadoNaWishlist.getQtd()).isEqualTo(2);
+    }
+
+    @Test
     void deveRetornarListaDeProdutosQuandoSucesso() {
         when(produtoRepository.listaProdutos()).thenReturn(Arrays.asList(produtoTeste, produtoTeste2));
         List<Produto> produtosRetornadosDaConsulta = businessLogic.consultaProdutosDaWishlist();
@@ -95,11 +105,30 @@ class BusinessLogicImplTest {
     }
 
     @Test
+    void deveLancarExceptionQuandoFalha() {
+        when(produtoRepository.buscaProdutoPorNomeMarcaDetalhes(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
+
+        Assertions.assertThatThrownBy(() ->
+                businessLogic.verificaSeProdutoEstaNaWishlist("teste-nome", "teste-marca", "teste-detalhes"))
+                .isInstanceOf(ProdutoNaoEncontradoNaWishlistException.class);
+    }
+
+    @Test
     void deveDeletarProdutoDaBaseQuandoSucesso() {
         when(produtoRepository.buscaProdutoPorNomeMarcaDetalhes(anyString(), anyString(), anyString())).thenReturn(Optional.ofNullable(produtoTeste));
         produtoTeste.setQtd(1);
 
         businessLogic.deletaProdutoDaWishList("teste-nome", "teste-marca", "teste-detalhes");
         verify(produtoRepository, times(1)).deletaProduto(produtoTeste);
+    }
+
+    @Test
+    void deveDecrementarQtdDoProdutoQuandoJaPersistido() {
+        when(produtoRepository.buscaProdutoPorNomeMarcaDetalhes(anyString(), anyString(), anyString())).thenReturn(Optional.ofNullable(produtoTeste));
+        produtoTeste.setQtd(2);
+        when(produtoRepository.atualizaProduto(any())).thenReturn(produtoTeste);
+        businessLogic.deletaProdutoDaWishList("teste-nome", "teste-marca", "teste-detalhes");
+
+        Assertions.assertThat(produtoTeste.getQtd()).isEqualTo(1);
     }
 }

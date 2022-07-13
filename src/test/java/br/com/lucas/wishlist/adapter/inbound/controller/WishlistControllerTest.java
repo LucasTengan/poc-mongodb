@@ -4,6 +4,7 @@ import br.com.lucas.wishlist.adapter.inbound.dto.ProdutoRequest;
 import br.com.lucas.wishlist.adapter.inbound.dto.ProdutoResponse;
 import br.com.lucas.wishlist.adapter.inbound.mapper.ProdutoMapper;
 import br.com.lucas.wishlist.domain.model.entity.Produto;
+import br.com.lucas.wishlist.domain.model.exception.FaltandoParametroParaVerificarException;
 import br.com.lucas.wishlist.domain.ports.BusinessLogic;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,5 +117,45 @@ class WishlistControllerTest {
         Assertions.assertThat(produtoResponseBody.getMarca()).isEqualTo(produtoTeste.getMarca());
         Assertions.assertThat(produtoResponseBody.getDetalhes()).isEqualTo(produtoTeste.getDetalhes());
         Assertions.assertThat(produtoResponseBody.getPreco()).isEqualTo(produtoTeste.getPreco());
+    }
+
+    @Test
+    void deveLancarExceptionQuandoSomenteCampoNomePassado() {
+        when(businessLogic.verificaSeProdutoEstaNaWishlist(anyString(), anyString(), anyString())).thenReturn(produtoTeste);
+        when(produtoMapper.entityToResponse(produtoTeste)).thenReturn(produtoResponseTeste);
+
+        Assertions.assertThatThrownBy(() ->
+                wishlistController.listProdutosDaWishlist("teste-nome", "", ""))
+                .isInstanceOf(FaltandoParametroParaVerificarException.class);
+    }
+
+    @Test
+    void deveLancarExceptionQuandoSomenteCampoMarcaPassado() {
+        when(businessLogic.verificaSeProdutoEstaNaWishlist(anyString(), anyString(), anyString())).thenReturn(produtoTeste);
+        when(produtoMapper.entityToResponse(produtoTeste)).thenReturn(produtoResponseTeste);
+
+        Assertions.assertThatThrownBy(() ->
+                wishlistController.listProdutosDaWishlist("", "teste-marca", ""))
+                .isInstanceOf(FaltandoParametroParaVerificarException.class);
+    }
+
+    @Test
+    void deveLancarExceptionQuandoSomenteCampoDetalhesPassado() {
+        when(businessLogic.verificaSeProdutoEstaNaWishlist(anyString(), anyString(), anyString())).thenReturn(produtoTeste);
+        when(produtoMapper.entityToResponse(produtoTeste)).thenReturn(produtoResponseTeste);
+
+        Assertions.assertThatThrownBy(() ->
+                wishlistController.listProdutosDaWishlist("", "", "teste-detalhes"))
+                .isInstanceOf(FaltandoParametroParaVerificarException.class);
+    }
+
+    @Test
+    void deveLancarExceptionQuandoSomenteUmOuDoisCamposPassado() {
+        when(businessLogic.verificaSeProdutoEstaNaWishlist(anyString(), anyString(), anyString())).thenReturn(produtoTeste);
+        when(produtoMapper.entityToResponse(produtoTeste)).thenReturn(produtoResponseTeste);
+
+        Assertions.assertThatThrownBy(() ->
+                wishlistController.listProdutosDaWishlist("teste-nome", "", "teste-detalhes"))
+                .isInstanceOf(FaltandoParametroParaVerificarException.class);
     }
 }

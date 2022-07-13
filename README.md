@@ -23,6 +23,10 @@ Nesta etapa, é preciso verificar se não há nenhum servidor MongoDB rodando lo
 ```
 .\mvnw spring-boot:run
 ```
+## 3.1 - Executando aplicação via cmd na pasta raiz (/teste-backend-luizalabs)
+```
+mvn spring-boot:run
+```
 
 A API estará disponível através da URL `localhost:8080`
 

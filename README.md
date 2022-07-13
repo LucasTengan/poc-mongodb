@@ -40,4 +40,4 @@ se não tiver, pode acessar a URl de documentação, também é possível testar
 ```
 Obrigado pela atenção :)
 
-Obs: também tentei conteinerizar a aplicação através do Dockerfile e docker-compose.yml, porém obtive alguns problemas de conexão da aplicação com o MongoDB que não encontrei soluções, então optei pelo caminho acima.
+Obs: também tentei conteinerizar a aplicação através do Dockerfile e docker-compose.yml, para evitar a necessidade de ter o JDK11 instalado. Porém, obtive alguns problemas de conexão da aplicação com o MongoDB e não encontrei soluções, sendo assim, optei pelo caminho acima de apenas conteinerizar o mongo.

@@ -2,6 +2,7 @@ package br.com.lucas.wishlist.adapter.inbound.controller;
 
 import br.com.lucas.wishlist.domain.model.exception.FaltandoParametroParaVerificarException;
 import br.com.lucas.wishlist.domain.model.exception.MensagemErro;
+import br.com.lucas.wishlist.domain.model.exception.NaoEPossivelAdicionarMaisProdutosNaWishlist;
 import br.com.lucas.wishlist.domain.model.exception.ProdutoNaoEncontradoNaWishlistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,11 @@ public class RestExceptionHandler {
     @ExceptionHandler(FaltandoParametroParaVerificarException.class)
     public MensagemErro faltaParametrosException() {
         return new MensagemErro("É preciso preencher os campos 'nome', 'marca' e 'detalhes' para verificar se um determinado produto está na Wishlist.", OffsetDateTime.now());
+    }
+
+    @ExceptionHandler(NaoEPossivelAdicionarMaisProdutosNaWishlist.class)
+    public MensagemErro naoEPossivelAdicionarMaisProdutosException() {
+        return new MensagemErro("A quantidade máxima de produtos na Wishlist é 20.", OffsetDateTime.now());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

@@ -1,6 +1,7 @@
 package br.com.lucas.wishlist.domain.service;
 
 import br.com.lucas.wishlist.domain.model.entity.Produto;
+import br.com.lucas.wishlist.domain.model.exception.NaoEPossivelAdicionarMaisProdutosNaWishlist;
 import br.com.lucas.wishlist.domain.model.exception.ProdutoNaoEncontradoNaWishlistException;
 import br.com.lucas.wishlist.domain.ports.BusinessLogic;
 import br.com.lucas.wishlist.domain.ports.ProdutoRepository;
@@ -18,6 +19,9 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Produto adicionaProdutoNaWishlist(Produto produto) {
+        List<Produto> produtos = consultaProdutosDaWishlist();
+        long quantidadeTotalDeProdutos = produtos.stream().mapToInt(Produto::getQtd).sum();
+        if (quantidadeTotalDeProdutos >= 20) throw new NaoEPossivelAdicionarMaisProdutosNaWishlist();
         Optional<Produto> produtoProcurado = produtoRepository.buscaProdutoPorNomeMarcaDetalhes(produto.getNome(), produto.getMarca(), produto.getDetalhes());
         produto.setQtd(1);
         if (produtoProcurado.isPresent()) {

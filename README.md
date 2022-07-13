@@ -5,6 +5,7 @@ Requisitos:
 
 - JDK11+
 - Docker
+- Postman
 
 ## 1 - Instalando na sua máquina
 ```
@@ -32,5 +33,11 @@ A API estará disponível através da URL `localhost:8080`
 
 Assim que executar a aplicação, poderá consultar sua documentação através da URL `localhost:8080/swagger-ui.html`
 
+## 4 - Testando a aplicação
+```
+caso tenha o postman instalado, basta importar a collection presente neste repositório e testar os endpoints
+se não tiver, pode acessar a URl de documentação, também é possível testar por lá
+```
+Obrigado pela atenção :)
 
 Obs: também tentei conteinerizar a aplicação através do Dockerfile e docker-compose.yml, porém obtive alguns problemas de conexão da aplicação com o MongoDB que não encontrei soluções, então optei pelo caminho acima.
